@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>🏅SportTalk App🏅</title>
+</head>
+
+<body>
+    <div class="join-container">
+        <header class="join-header">
+            <h1>
+                🏅 SportTalk</h1>
+        </header>
+        <main class="join-main">
+            <form action="/joinchat" method="POST" class="mainform">
+                <div class="form-control">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" placeholder="Enter username..." value="<%= user.username %>" readonly required />
+                </div>
+                <div class="form-control">
+                    <label for="room">Room</label>
+                    <select name="room" id="room">
+                        <%for(let i=0;i<rooms.length;i++){%>
+                            <option value="<%= rooms[i].matchname %>"><%= rooms[i].matchname %></option>
+                           
+
+                         
+                        <%}%>
+                        <%for(let i=0;i<rooms.length;i++){%>
+                           
+                            <input type="text" name="sport" class="sport <%= rooms[i].matchname.split(" ").join("") %>" value="<%= rooms[i].sport%>">
+                            <input type="text" name="matchid" class="matchid <%= rooms[i].matchname.split(" ").join("") %>" value="<%= rooms[i].matchid%>">
+
+                         
+                        <%}%>
+							
+							
+						</select>
+
+                </div>
+                <button type="button" class="btn submitmainform">Join Chat</button>
+                <button type="button" class="btn closemainform">Close</button>
+
+            </form>
+            <button type="button" class="btn showmainform">
+                Join a Public Room
+            </button>
+            <form method="POST" action="/createaprivateroom" class="hide">
+                <br>
+                <input type="text" name="privateroom_name" placeholder="Room_Name" required>
+                <button type="submit" class="btn">Create And Join Chat</button>
+                <button type="button" class="btn close">Close</button>
+
+            </form>
+            <button type="button" class="btn show">Create a Private Room</button>
+            <form method="POST" action="/joinaprivateroom" class="hidejoin">
+                <br>
+                <input type="text" name="privateroom_id" placeholder="Room_Id" required>
+                <button type="submit" class="btn">Join Chat</button>
+                <button type="button" class="btn closejoin">Close</button>
+
+            </form>
+            <button type="button" class="btn showjoin">Join a Private Room</button>
+            <a href="/livescore"><button type="button" class="btn livebtn">Live Scores</button></a>
+
+
+        </main>
+    </div>
+    <div class="logout"><a href="/logout">Logout</a></div>
+    <script>
+        document.querySelector(".submitmainform").addEventListener("click", function() {
+            let a = document.querySelector("#room").value;
+            let b = document.querySelectorAll(".sport");
+            for (let i = 0; i < b.length; i++) {
+                if (!b[i].classList.contains(a.trim().split(" ").join(""))) {
+                    b[i].remove();
+                }
+            }
+            b = document.querySelectorAll(".matchid");
+            for (let i = 0; i < b.length; i++) {
+                if (!b[i].classList.contains(a.trim().split(" ").join(""))) {
+                    b[i].remove();
+                }
+            }
+            document.querySelector(".mainform").submit();
+
+        });
+        let a = document.querySelectorAll(".sport");
+        for (let i = 0; i < a.length; i++) {
+            a[i].style.display = "none";
+        }
+        a = document.querySelectorAll(".matchid");
+        for (let i = 0; i < a.length; i++) {
+            a[i].style.display = "none";
+        }
+
+        <% for(let i=0;i<messages.length;i++){ %>
+        alert("<%= messages[i] %>");
+        <% } %>
+        document.querySelector(".mainform").style.display = "none";
+        document.querySelector(".showmainform").addEventListener("click", function() {
+            document.querySelector(".mainform").style.display = "block";
+            document.querySelector(".showmainform").style.display = "none";
+            document.querySelector(".showjoin").style.display = "none";
+            document.querySelector(".show").style.display = "none";
+            document.querySelector(".livebtn").style.display = "none";
+        });
+        document.querySelector(".closemainform").addEventListener("click", function() {
+            document.querySelector(".mainform").style.display = "none";
+            document.querySelector(".showmainform").style.display = "block";
+            document.querySelector(".showjoin").style.display = "block";
+            document.querySelector(".show").style.display = "block";
+            document.querySelector(".livebtn").style.display = "block";
+
+        });
+
+        document.querySelector(".hide").style.display = "none";
+        document.querySelector(".show").addEventListener("click", function() {
+            document.querySelector(".hide").style.display = "block";
+            document.querySelector(".show").style.display = "none";
+            document.querySelector(".showjoin").style.display = "none";
+            document.querySelector(".mainform").style.display = "none";
+            document.querySelector(".showmainform").style.display = "none";
+            document.querySelector(".livebtn").style.display = "none";
+        });
+        document.querySelector(".close").addEventListener("click", function() {
+            document.querySelector(".hide").style.display = "none";
+            document.querySelector(".show").style.display = "block";
+            document.querySelector(".showjoin").style.display = "block";
+            document.querySelector(".mainform").style.display = "none";
+            document.querySelector(".showmainform").style.display = "block";
+            document.querySelector(".livebtn").style.display = "block";
+
+        });
+        document.querySelector(".hidejoin").style.display = "none";
+        document.querySelector(".showjoin").addEventListener("click", function() {
+            document.querySelector(".hidejoin").style.display = "block";
+            document.querySelector(".showjoin").style.display = "none";
+            document.querySelector(".show").style.display = "none";
+            document.querySelector(".mainform").style.display = "none";
+            document.querySelector(".showmainform").style.display = "none";
+            document.querySelector(".livebtn").style.display = "none";
+        });
+        document.querySelector(".closejoin").addEventListener("click", function() {
+            document.querySelector(".hidejoin").style.display = "none";
+            document.querySelector(".showjoin").style.display = "block";
+            document.querySelector(".show").style.display = "block";
+            document.querySelector(".mainform").style.display = "none";
+            document.querySelector(".showmainform").style.display = "block";
+            document.querySelector(".livebtn").style.display = "block";
+
+        });
+    </script>
+</body>
+
+</html>
